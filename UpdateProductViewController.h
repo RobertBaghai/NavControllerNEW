@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UpdateProductViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface UpdateProductViewController : UIViewController 
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
-@property (nonatomic, weak) NSMutableArray *array; 
-@property (weak, nonatomic) IBOutlet UIImageView *imageToBeEdited;
+@property (nonatomic, weak) NSMutableArray *updateProductArray;
 
 @end

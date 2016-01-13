@@ -7,12 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
-@interface Company : NSObject
+@interface Company : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *companyName;
-@property (nonatomic, strong) UIImage *companyLogo;
+@property (nonatomic, strong) NSString *companyLogo;
 @property (nonatomic, strong) NSString *stockCode;
 @property (nonatomic, strong) NSString *stockPrice;
 @property (nonatomic, strong) NSMutableArray *companyProducts;

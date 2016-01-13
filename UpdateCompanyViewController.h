@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UpdateCompanyViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface UpdateCompanyViewController : UIViewController 
 
-@property (nonatomic, weak) NSMutableArray *array;
+@property (nonatomic, weak) NSMutableArray *updatedCompanyArray;
 @property (nonatomic, strong) NSIndexPath *indexPath;
-@property (weak, nonatomic) IBOutlet UIImageView *imageToBeEdited;
 
 @end

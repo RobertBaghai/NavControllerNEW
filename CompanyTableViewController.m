@@ -23,14 +23,14 @@
 @end
 
 @implementation CompanyTableViewController
-@synthesize refreshControl;
+@dynamic refreshControl;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Mobile Devices";
     [self createRightBarButtonItems];
     self.dao = [DataAccessObject sharedInstance];
-    [self.dao getCompaniesAndProducts];
+    [self.dao archiveOrUnarchive];
     [self addRefeshControlForTableView];
     [self addLongPressToTableView];
     self.tableView.backgroundColor = [UIColor grayColor];
@@ -39,6 +39,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadStockPrices];
+    [self.dao archiveData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -112,7 +113,7 @@
 }
 
 - (IBAction)addCompanyLongPressAction:(UILongPressGestureRecognizer *)sender {
-    if ( sender.state == UIGestureRecognizerStateRecognized ){
+    if ( sender.state == UIGestureRecognizerStateRecognized ) {
         UITableView *tableView = (UITableView*)self.view;
         CGPoint touchPoint = [sender locationInView:self.view];
         self.indexPath = [tableView indexPathForRowAtPoint:touchPoint];
@@ -138,7 +139,7 @@
     Company *company = [self.dao.companyList objectAtIndex:indexPath.row];
     cell.textLabel.text = company.companyName;
     cell.textLabel.textColor = [UIColor blueColor];
-    cell.imageView.image = company.companyLogo;
+    cell.imageView.image = [UIImage imageNamed:company.companyLogo];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"Current Stock Price: %@",company.stockPrice];
     cell.detailTextLabel.textColor = [UIColor redColor];
     
@@ -154,6 +155,7 @@
         [self.dao.companyList removeObjectAtIndex:indexPath.row];
         [self.dao.stockPrices removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.dao archiveData];
     }
 }
 
@@ -161,6 +163,7 @@
     Company *company = [self.dao.companyList objectAtIndex: fromIndexPath.row];
     [self.dao.companyList removeObjectAtIndex: fromIndexPath.row];
     [self.dao.companyList insertObject:company atIndex: toIndexPath.row];
+    [self.dao archiveData];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -181,11 +184,11 @@
         
     } else if ( [segue.identifier isEqualToString:@"addCompanies"] ) {
         AddCompanyViewController *addCompany = (AddCompanyViewController*)segue.destinationViewController;
-        addCompany.array = sender;
+        addCompany.addedCompanyArray = sender;
         
     } else if ( [segue.identifier isEqualToString:@"updateCompany"] ) {
         UpdateCompanyViewController *updateCompany = (UpdateCompanyViewController*)segue.destinationViewController;
-        updateCompany.array = sender;
+        updateCompany.updatedCompanyArray = sender;
         if ( self.indexPath != nil ) {
             updateCompany.indexPath = self.indexPath;
         }

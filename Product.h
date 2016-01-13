@@ -7,12 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
-@interface Product : NSObject
+@interface Product : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *productName;
-@property (nonatomic, strong) UIImage *productLogo;
+@property (nonatomic, strong) NSString *productLogo;
 @property (nonatomic, strong) NSString *productUrl;
 
 @end

@@ -22,4 +22,8 @@
 #pragma mark - Update Stocks
 - (void) updateStockPrices;
 
+#pragma mark NSUserDefaults Methods
+- (void)archiveOrUnarchive;
+- (void)archiveData;
+
 @end

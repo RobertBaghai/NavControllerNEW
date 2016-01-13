@@ -13,8 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *productNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *productUrlTextField;
-@property (weak, nonatomic) IBOutlet UIImageView *pickedImageDisplay;
-@property (nonatomic, strong) UIImage *pickedImage;
+@property (weak, nonatomic) IBOutlet UIImageView *addedProductLogo;
 
 @end
 
@@ -22,33 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.addedProductLogo.image = [UIImage imageNamed:@"lightBulb.png"];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-- (IBAction)selectLogoButton:(id)sender {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    imagePicker.allowsEditing = YES;
-    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    [self presentViewController:imagePicker animated:YES completion:nil];
-    
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    self.pickedImageDisplay.image = info[UIImagePickerControllerEditedImage];
-    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Submit New Product
@@ -56,8 +33,8 @@
     Product *product = [[Product alloc] init];
     product.productName = self.productNameTextField.text;
     product.productUrl = self.productUrlTextField.text;
-    product.productLogo = self.pickedImageDisplay.image;
-    [self.array addObject:product];
+    product.productLogo = @"lightBulb.png";
+    [self.addedProductArray addObject:product];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

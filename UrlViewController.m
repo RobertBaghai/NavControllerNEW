@@ -10,6 +10,8 @@
 
 @interface UrlViewController ()
 
+@property (nonatomic, strong) NSURL *myURL;
+
 @end
 
 @implementation UrlViewController

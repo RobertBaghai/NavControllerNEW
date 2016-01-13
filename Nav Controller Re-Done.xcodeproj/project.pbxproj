@@ -23,6 +23,10 @@
 		431314A21C40552B006B4083 /* UrlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 431314A11C40552B006B4083 /* UrlViewController.m */; };
 		4342291F1C40B14C00569807 /* AddCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4342291E1C40B14C00569807 /* AddCompanyViewController.m */; };
 		434229221C40B2B400569807 /* AddProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 434229211C40B2B400569807 /* AddProductsViewController.m */; };
+		435FD4211C46C40D000FDF07 /* neutron.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 435FD4201C46C40D000FDF07 /* neutron.jpg */; };
+		435FD4231C46CCCA000FDF07 /* newNeutron.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 435FD4221C46CCCA000FDF07 /* newNeutron.jpg */; };
+		435FD4261C46CDFC000FDF07 /* lightBulb.png in Resources */ = {isa = PBXBuildFile; fileRef = 435FD4241C46CDFC000FDF07 /* lightBulb.png */; };
+		435FD4271C46CDFC000FDF07 /* newBulb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 435FD4251C46CDFC000FDF07 /* newBulb.jpg */; };
 		436C79131C4321080091F865 /* UpdateCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C79121C4321080091F865 /* UpdateCompanyViewController.m */; };
 		436C79161C4321150091F865 /* UpdateProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C79151C4321150091F865 /* UpdateProductViewController.m */; };
 		437561811C40089200351D86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 437561801C40089200351D86 /* main.m */; };
@@ -76,6 +80,10 @@
 		4342291E1C40B14C00569807 /* AddCompanyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCompanyViewController.m; sourceTree = "<group>"; };
 		434229201C40B2B400569807 /* AddProductsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductsViewController.h; sourceTree = "<group>"; };
 		434229211C40B2B400569807 /* AddProductsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductsViewController.m; sourceTree = "<group>"; };
+		435FD4201C46C40D000FDF07 /* neutron.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = neutron.jpg; sourceTree = "<group>"; };
+		435FD4221C46CCCA000FDF07 /* newNeutron.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = newNeutron.jpg; sourceTree = "<group>"; };
+		435FD4241C46CDFC000FDF07 /* lightBulb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightBulb.png; sourceTree = "<group>"; };
+		435FD4251C46CDFC000FDF07 /* newBulb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = newBulb.jpg; sourceTree = "<group>"; };
 		436C79111C4321080091F865 /* UpdateCompanyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateCompanyViewController.h; sourceTree = "<group>"; };
 		436C79121C4321080091F865 /* UpdateCompanyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateCompanyViewController.m; sourceTree = "<group>"; };
 		436C79141C4321150091F865 /* UpdateProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateProductViewController.h; sourceTree = "<group>"; };
@@ -132,6 +140,10 @@
 		431314931C40516B006B4083 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				435FD4241C46CDFC000FDF07 /* lightBulb.png */,
+				435FD4251C46CDFC000FDF07 /* newBulb.jpg */,
+				435FD4221C46CCCA000FDF07 /* newNeutron.jpg */,
+				435FD4201C46C40D000FDF07 /* neutron.jpg */,
 				4313149A1C4052CC006B4083 /* camera.jpg */,
 				4313149B1C4052CC006B4083 /* htcone.jpg */,
 				4313149C1C4052CC006B4083 /* nexus.jpg */,
@@ -365,10 +377,14 @@
 				431314971C405231006B4083 /* note.jpg in Resources */,
 				4375618F1C40089200351D86 /* LaunchScreen.storyboard in Resources */,
 				431314921C404D77006B4083 /* ipod.jpg in Resources */,
+				435FD4261C46CDFC000FDF07 /* lightBulb.png in Resources */,
+				435FD4211C46C40D000FDF07 /* neutron.jpg in Resources */,
 				431314901C404D77006B4083 /* ipad.jpg in Resources */,
 				431314991C405231006B4083 /* tablet.jpg in Resources */,
 				4313149E1C4052CC006B4083 /* htcone.jpg in Resources */,
+				435FD4231C46CCCA000FDF07 /* newNeutron.jpg in Resources */,
 				4375618C1C40089200351D86 /* Assets.xcassets in Resources */,
+				435FD4271C46CDFC000FDF07 /* newBulb.jpg in Resources */,
 				431314851C402A39006B4083 /* apple.jpg in Resources */,
 				431314891C402B17006B4083 /* htc.png in Resources */,
 				4313149D1C4052CC006B4083 /* camera.jpg in Resources */,

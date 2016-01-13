@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddProductsViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface AddProductsViewController : UIViewController 
 
-@property (nonatomic, weak) NSMutableArray *array;
+@property (nonatomic, weak) NSMutableArray *addedProductArray;
 
 @end

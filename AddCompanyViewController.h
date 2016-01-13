@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddCompanyViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface AddCompanyViewController : UIViewController 
 
-@property (nonatomic, weak) NSMutableArray *array;
+@property (nonatomic, weak) NSMutableArray *addedCompanyArray;
 
 @end

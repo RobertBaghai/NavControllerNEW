@@ -51,32 +51,25 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fq7-0Q-Sfw">
-                                <rect key="frame" x="36" y="353" width="248" height="30"/>
-                                <state key="normal" title="Select Logo"/>
-                                <connections>
-                                    <action selector="selectLogoButton:" destination="M9h-Cl-wf8" eventType="touchUpInside" id="sie-K8-glz"/>
-                                </connections>
-                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jgP-zn-jDi">
+                                <rect key="frame" x="115" y="346" width="90" height="95"/>
+                                <color key="backgroundColor" red="0.0" green="0.16471141919999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76n-qG-245">
-                                <rect key="frame" x="36" y="430" width="248" height="30"/>
+                                <rect key="frame" x="36" y="442" width="248" height="30"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submitButton:" destination="M9h-Cl-wf8" eventType="touchUpInside" id="llR-mj-DHu"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jgP-zn-jDi">
-                                <rect key="frame" x="11" y="368" width="90" height="104"/>
-                                <color key="backgroundColor" red="0.0" green="0.16471141919999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="addedCompanyLogo" destination="jgP-zn-jDi" id="PHI-Sc-ILx"/>
                         <outlet property="companyNameTextField" destination="WLN-Lf-Qhu" id="k1Q-BE-HDw"/>
                         <outlet property="companyStockCodeTextField" destination="bly-Og-ni6" id="lze-I0-XnY"/>
-                        <outlet property="theImage" destination="jgP-zn-jDi" id="Pza-Un-2sx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S9G-rB-sRg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -123,13 +116,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UmD-hY-hn9">
-                                <rect key="frame" x="36" y="353" width="248" height="30"/>
-                                <state key="normal" title="Select Logo"/>
-                                <connections>
-                                    <action selector="selectLogoButton:" destination="Ode-KS-rOw" eventType="touchUpInside" id="HNf-HX-dgS"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Product Name:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F4N-G3-BhL">
                                 <rect key="frame" x="36" y="155" width="248" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -137,14 +123,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Hb-Sh-fiN">
-                                <rect key="frame" x="36" y="391" width="248" height="30"/>
+                                <rect key="frame" x="36" y="442" width="248" height="30"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submitProductButton:" destination="Ode-KS-rOw" eventType="touchUpInside" id="bsj-ND-z66"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ls7-71-huf">
-                                <rect key="frame" x="8" y="368" width="90" height="104"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X8O-gB-8CO">
+                                <rect key="frame" x="115" y="345" width="90" height="95"/>
                                 <color key="backgroundColor" red="0.0" green="0.16471141919999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                         </subviews>
@@ -152,7 +138,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="pickedImageDisplay" destination="Ls7-71-huf" id="cp2-4p-Y9G"/>
+                        <outlet property="addedProductLogo" destination="X8O-gB-8CO" id="API-w9-w5H"/>
                         <outlet property="productNameTextField" destination="Ihi-26-HPE" id="x32-Gv-HDt"/>
                         <outlet property="productUrlTextField" destination="8Ox-I4-5wg" id="3Ez-8u-hl9"/>
                     </connections>
@@ -317,29 +303,22 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v9b-r6-IpU">
-                                <rect key="frame" x="36" y="409" width="248" height="30"/>
+                                <rect key="frame" x="36" y="442" width="248" height="30"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submitUpdatedCompanyButton:" destination="Mja-HT-mIh" eventType="touchUpInside" id="HIM-Q3-wxz"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g2f-77-zLR">
-                                <rect key="frame" x="7" y="368" width="90" height="104"/>
+                                <rect key="frame" x="115" y="346" width="90" height="95"/>
                                 <color key="backgroundColor" red="0.0" green="0.16471141919999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWc-xK-wVo">
-                                <rect key="frame" x="36" y="371" width="248" height="30"/>
-                                <state key="normal" title="Select New Logo"/>
-                                <connections>
-                                    <action selector="selectNewCompanyLogoButton:" destination="Mja-HT-mIh" eventType="touchUpInside" id="RoL-ja-aaD"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="imageToBeEdited" destination="g2f-77-zLR" id="xpm-Ov-ax5"/>
+                        <outlet property="updateCompanyLogo" destination="g2f-77-zLR" id="o4F-zL-wFi"/>
                         <outlet property="updatedCompanyNameTextField" destination="c2r-i0-SAa" id="pbi-ni-dZh"/>
                         <outlet property="updatedCompanyStockCodeTextField" destination="Dfe-xf-E4Y" id="Zns-at-9Ed"/>
                     </connections>
@@ -412,22 +391,15 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="66B-mj-1Ia">
-                                <rect key="frame" x="43" y="353" width="248" height="30"/>
-                                <state key="normal" title="Select New Logo"/>
-                                <connections>
-                                    <action selector="selectNewProductLogoButton:" destination="mMw-lt-WiA" eventType="touchUpInside" id="C5w-09-Ikx"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UYJ-xY-U7L">
-                                <rect key="frame" x="43" y="401" width="248" height="30"/>
+                                <rect key="frame" x="43" y="442" width="248" height="30"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submitUpdatedProductButton:" destination="mMw-lt-WiA" eventType="touchUpInside" id="ddt-DV-dIg"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Scy-zX-21k">
-                                <rect key="frame" x="8" y="368" width="90" height="104"/>
+                                <rect key="frame" x="122" y="346" width="90" height="98"/>
                                 <color key="backgroundColor" red="0.0" green="0.16471141919999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                         </subviews>
@@ -435,7 +407,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="imageToBeEdited" destination="Scy-zX-21k" id="8Tb-iM-qgN"/>
+                        <outlet property="updateProductLogo" destination="Scy-zX-21k" id="z7K-Ws-3hh"/>
                         <outlet property="updatedProductNameTextField" destination="ZqW-YH-yfx" id="VcH-Qc-96I"/>
                         <outlet property="updatedProductUrlTextField" destination="etX-9e-90a" id="s67-yY-W5s"/>
                     </connections>

@@ -11,11 +11,13 @@
 #import "UrlViewController.h"
 #import "AddProductsViewController.h"
 #import "UpdateProductViewController.h"
+#import "DataAccessObject.h"
 
 @interface ProductTableViewController ()
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) NSIndexPath *indexPath;
+@property (nonatomic, strong) DataAccessObject *dao;
 
 @end
 
@@ -28,6 +30,7 @@
     [self createRightBarButtonItems];
     [self addRefeshControlForTableView];
     [self addLongPressToTableView];
+    self.dao = [DataAccessObject sharedInstance];
     self.tableView.backgroundColor = [UIColor grayColor];
 }
 
@@ -41,6 +44,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
+    [self.dao archiveData];
 }
 
 #pragma mark - Create Navigation Items
@@ -102,7 +106,7 @@
     Product *product = [self.companyProducts objectAtIndex:indexPath.row];
     cell.textLabel.text = product.productName;
     cell.textLabel.textColor = [UIColor blueColor];
-    cell.imageView.image = product.productLogo;
+    cell.imageView.image = [UIImage imageNamed:product.productLogo];
     cell.detailTextLabel.text = product.productUrl;
     cell.detailTextLabel.textColor = [UIColor redColor];
 
@@ -117,6 +121,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.companyProducts removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.dao archiveData];
     }
 }
 
@@ -124,6 +129,7 @@
     Product *product = [self.companyProducts objectAtIndex:fromIndexPath.row];
     [self.companyProducts removeObjectAtIndex:fromIndexPath.row];
     [self.companyProducts insertObject:product atIndex:toIndexPath.row];
+    [self.dao archiveData];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -142,10 +148,10 @@
         [urlView setURL:sender];
     } else if ([segue.identifier isEqualToString:@"addProducts"]){
         AddProductsViewController *addProduct = (AddProductsViewController*)segue.destinationViewController;
-        addProduct.array = sender;
+        addProduct.addedProductArray = sender;
     } else if ( [segue.identifier isEqualToString:@"updateProduct"] ) {
         UpdateProductViewController *updateProduct = (UpdateProductViewController*)segue.destinationViewController;
-        updateProduct.array = sender;
+        updateProduct.updateProductArray = sender;
         if ( self.indexPath != nil ) {
             updateProduct.indexPath = self.indexPath;
         }
