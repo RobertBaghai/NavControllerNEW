@@ -16,7 +16,7 @@
 @interface ProductTableViewController ()
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, strong) NSIndexPath *indexPath;
+@property (nonatomic, strong) NSIndexPath      *indexPath;
 @property (nonatomic, strong) DataAccessObject *dao;
 
 @end
@@ -40,11 +40,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
-    [self.dao archiveData];
 }
 
 #pragma mark - Create Navigation Items
@@ -73,8 +71,8 @@
 #pragma mark - Create Long Press Gesture
 - (void)addLongPressToTableView {
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(addProductLongPressAction:)];
-    longPress.minimumPressDuration = 1.0;
-    longPress.cancelsTouchesInView = YES;
+    longPress.minimumPressDuration          = 1.0;
+    longPress.cancelsTouchesInView          = YES;
     [self.tableView addGestureRecognizer:longPress];
 }
 
@@ -109,19 +107,21 @@
     cell.imageView.image = [UIImage imageNamed:product.productLogo];
     cell.detailTextLabel.text = product.productUrl;
     cell.detailTextLabel.textColor = [UIColor redColor];
-
+    
     return cell;
 }
 
+#pragma mark - Table view Delegates
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Product *product = [self.companyProducts objectAtIndex:indexPath.row];
+        [self.dao deleteProductWithQuery:product];
         [self.companyProducts removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self.dao archiveData];
     }
 }
 
@@ -129,7 +129,7 @@
     Product *product = [self.companyProducts objectAtIndex:fromIndexPath.row];
     [self.companyProducts removeObjectAtIndex:fromIndexPath.row];
     [self.companyProducts insertObject:product atIndex:toIndexPath.row];
-    [self.dao archiveData];
+    [self.dao moveProductWithQuery:product usingArray:self.companyProducts];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -148,10 +148,11 @@
         [urlView setURL:sender];
     } else if ([segue.identifier isEqualToString:@"addProducts"]){
         AddProductsViewController *addProduct = (AddProductsViewController*)segue.destinationViewController;
-        addProduct.addedProductArray = sender;
+        addProduct.addedProductArray          = sender;
+        addProduct.company                    = self.company;
     } else if ( [segue.identifier isEqualToString:@"updateProduct"] ) {
         UpdateProductViewController *updateProduct = (UpdateProductViewController*)segue.destinationViewController;
-        updateProduct.updateProductArray = sender;
+        updateProduct.updateProductArray           = sender;
         if ( self.indexPath != nil ) {
             updateProduct.indexPath = self.indexPath;
         }

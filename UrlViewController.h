@@ -10,7 +10,6 @@
 
 @interface UrlViewController : UIViewController
 
-@property (nonatomic, strong) WKWebView *wkWeb;
 - (void)setURL:(NSString *)url;
 
 @end

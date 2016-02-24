@@ -10,7 +10,7 @@
 
 @interface UpdateCompanyViewController : UIViewController 
 
-@property (nonatomic, weak) NSMutableArray *updatedCompanyArray;
-@property (nonatomic, strong) NSIndexPath *indexPath;
+@property (nonatomic, weak)   NSMutableArray *updatedCompanyArray;
+@property (nonatomic, strong) NSIndexPath    *indexPath;
 
 @end

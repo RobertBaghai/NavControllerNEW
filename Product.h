@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Product : NSObject <NSCoding>
+@interface Product : NSObject
 
-@property (nonatomic, strong) NSString *productName;
-@property (nonatomic, strong) NSString *productLogo;
-@property (nonatomic, strong) NSString *productUrl;
+@property (nonatomic, strong) NSString  *productName;
+@property (nonatomic, strong) NSString  *productLogo;
+@property (nonatomic, strong) NSString  *productUrl;
+@property (nonatomic, strong) NSString  *productId;
+@property (nonatomic, assign) NSUInteger productPosition;
 
 @end

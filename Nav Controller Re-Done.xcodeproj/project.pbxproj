@@ -21,6 +21,7 @@
 		4313149E1C4052CC006B4083 /* htcone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4313149B1C4052CC006B4083 /* htcone.jpg */; };
 		4313149F1C4052CC006B4083 /* nexus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4313149C1C4052CC006B4083 /* nexus.jpg */; };
 		431314A21C40552B006B4083 /* UrlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 431314A11C40552B006B4083 /* UrlViewController.m */; };
+		432BDC3E1C764D3900248B55 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 432BDC3D1C764D3900248B55 /* libsqlite3.tbd */; };
 		4342291F1C40B14C00569807 /* AddCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4342291E1C40B14C00569807 /* AddCompanyViewController.m */; };
 		434229221C40B2B400569807 /* AddProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 434229211C40B2B400569807 /* AddProductsViewController.m */; };
 		435FD4211C46C40D000FDF07 /* neutron.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 435FD4201C46C40D000FDF07 /* neutron.jpg */; };
@@ -40,6 +41,7 @@
 		437561BA1C4013D700351D86 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 437561B91C4013D700351D86 /* Company.m */; };
 		437561BD1C4013E200351D86 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 437561BC1C4013E200351D86 /* Product.m */; };
 		437561C01C4013F800351D86 /* DataAccessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 437561BF1C4013F800351D86 /* DataAccessObject.m */; };
+		43AF8D1E1C767F5200620E29 /* NavControllerDataBase.db in Resources */ = {isa = PBXBuildFile; fileRef = 43AF8D1D1C767F5200620E29 /* NavControllerDataBase.db */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +78,7 @@
 		4313149C1C4052CC006B4083 /* nexus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nexus.jpg; sourceTree = "<group>"; };
 		431314A01C40552B006B4083 /* UrlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UrlViewController.h; sourceTree = "<group>"; };
 		431314A11C40552B006B4083 /* UrlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UrlViewController.m; sourceTree = "<group>"; };
+		432BDC3D1C764D3900248B55 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		4342291D1C40B14C00569807 /* AddCompanyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCompanyViewController.h; sourceTree = "<group>"; };
 		4342291E1C40B14C00569807 /* AddCompanyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCompanyViewController.m; sourceTree = "<group>"; };
 		434229201C40B2B400569807 /* AddProductsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductsViewController.h; sourceTree = "<group>"; };
@@ -110,6 +113,7 @@
 		437561BC1C4013E200351D86 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
 		437561BE1C4013F800351D86 /* DataAccessObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataAccessObject.h; sourceTree = "<group>"; };
 		437561BF1C4013F800351D86 /* DataAccessObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataAccessObject.m; sourceTree = "<group>"; };
+		43AF8D1D1C767F5200620E29 /* NavControllerDataBase.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = NavControllerDataBase.db; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				432BDC3E1C764D3900248B55 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +142,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		43058D011C7652C300776210 /* frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				432BDC3D1C764D3900248B55 /* libsqlite3.tbd */,
+			);
+			name = frameworks;
+			sourceTree = "<group>";
+		};
 		431314931C40516B006B4083 /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,8 +200,10 @@
 		4375617E1C40089200351D86 /* Nav Controller Re-Done */ = {
 			isa = PBXGroup;
 			children = (
+				43058D011C7652C300776210 /* frameworks */,
 				437561821C40089200351D86 /* AppDelegate.h */,
 				437561831C40089200351D86 /* AppDelegate.m */,
+				43AF8D1D1C767F5200620E29 /* NavControllerDataBase.db */,
 				4375618B1C40089200351D86 /* Assets.xcassets */,
 				431314931C40516B006B4083 /* images */,
 				437561901C40089200351D86 /* Info.plist */,
@@ -226,20 +241,9 @@
 		437561B51C4010E000351D86 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				437561B21C400DF700351D86 /* CompanyTableViewController.h */,
-				437561B31C400DF700351D86 /* CompanyTableViewController.m */,
-				4313148A1C403C33006B4083 /* ProductTableViewController.h */,
-				4313148B1C403C33006B4083 /* ProductTableViewController.m */,
-				431314A01C40552B006B4083 /* UrlViewController.h */,
-				431314A11C40552B006B4083 /* UrlViewController.m */,
-				4342291D1C40B14C00569807 /* AddCompanyViewController.h */,
-				4342291E1C40B14C00569807 /* AddCompanyViewController.m */,
-				434229201C40B2B400569807 /* AddProductsViewController.h */,
-				434229211C40B2B400569807 /* AddProductsViewController.m */,
-				436C79111C4321080091F865 /* UpdateCompanyViewController.h */,
-				436C79121C4321080091F865 /* UpdateCompanyViewController.m */,
-				436C79141C4321150091F865 /* UpdateProductViewController.h */,
-				436C79151C4321150091F865 /* UpdateProductViewController.m */,
+				43E58D341C77C48600692BC9 /* Company */,
+				43E58D331C77C48400692BC9 /* Product */,
+				43E58D351C77C4BE00692BC9 /* WebView */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -264,6 +268,41 @@
 				437561BF1C4013F800351D86 /* DataAccessObject.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		43E58D331C77C48400692BC9 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				4313148A1C403C33006B4083 /* ProductTableViewController.h */,
+				4313148B1C403C33006B4083 /* ProductTableViewController.m */,
+				434229201C40B2B400569807 /* AddProductsViewController.h */,
+				434229211C40B2B400569807 /* AddProductsViewController.m */,
+				436C79141C4321150091F865 /* UpdateProductViewController.h */,
+				436C79151C4321150091F865 /* UpdateProductViewController.m */,
+			);
+			name = Product;
+			sourceTree = "<group>";
+		};
+		43E58D341C77C48600692BC9 /* Company */ = {
+			isa = PBXGroup;
+			children = (
+				437561B21C400DF700351D86 /* CompanyTableViewController.h */,
+				437561B31C400DF700351D86 /* CompanyTableViewController.m */,
+				4342291D1C40B14C00569807 /* AddCompanyViewController.h */,
+				4342291E1C40B14C00569807 /* AddCompanyViewController.m */,
+				436C79111C4321080091F865 /* UpdateCompanyViewController.h */,
+				436C79121C4321080091F865 /* UpdateCompanyViewController.m */,
+			);
+			name = Company;
+			sourceTree = "<group>";
+		};
+		43E58D351C77C4BE00692BC9 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				431314A01C40552B006B4083 /* UrlViewController.h */,
+				431314A11C40552B006B4083 /* UrlViewController.m */,
+			);
+			name = WebView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,6 +425,7 @@
 				4375618C1C40089200351D86 /* Assets.xcassets in Resources */,
 				435FD4271C46CDFC000FDF07 /* newBulb.jpg in Resources */,
 				431314851C402A39006B4083 /* apple.jpg in Resources */,
+				43AF8D1E1C767F5200620E29 /* NavControllerDataBase.db in Resources */,
 				431314891C402B17006B4083 /* htc.png in Resources */,
 				4313149D1C4052CC006B4083 /* camera.jpg in Resources */,
 				4375618A1C40089200351D86 /* Main.storyboard in Resources */,

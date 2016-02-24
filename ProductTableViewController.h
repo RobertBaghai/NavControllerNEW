@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Company.h"
 
 @interface ProductTableViewController : UITableViewController 
 
 @property (nonatomic, strong) NSMutableArray *companyProducts;
+@property (nonatomic, strong) Company *company;
 
 @end

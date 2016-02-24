@@ -7,23 +7,33 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Company;
+@class Product;
 
 @interface DataAccessObject : NSObject
 
 @property (nonatomic, strong) NSMutableArray *companyList;
-@property (nonatomic, strong) NSMutableArray *stockPrices;
 
 #pragma mark - Shared Instance Method
 + (instancetype)sharedInstance;
 
-#pragma mark - Hard Coded Values
-- (void)getCompaniesAndProducts;
+#pragma mark - Get Data using SQL
+- (void) createEditableCopyOfDatabaseIfNeeded;
 
-#pragma mark - Update Stocks
-- (void) updateStockPrices;
+#pragma mark - Delete using SQL
+- (void) deleteCompanyWithQuery     : (Company*)company;
+- (void) deleteProductWithQuery     : (Product*)product;
 
-#pragma mark NSUserDefaults Methods
-- (void)archiveOrUnarchive;
-- (void)archiveData;
+#pragma mark - Add using SQL
+- (void) addCompanyWithQuery        : (Company*)company;
+- (void) addProductWithQuery        : (Product*)product forCompanyId:(Company*)company;
+
+#pragma mark - Update using SQL
+- (void) updateCompanyDataWithQuery : (Company*)company;
+- (void) updateProductDataWithQuery : (Product*)product;
+
+#pragma mark - Move using SQL
+- (void) moveCompanyWithQuery       : (Company*)company;
+- (void) moveProductWithQuery       : (Product*)product usingArray: (NSMutableArray*)companyProducts;
 
 @end

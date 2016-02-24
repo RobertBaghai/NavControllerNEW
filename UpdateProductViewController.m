@@ -8,13 +8,15 @@
 
 #import "UpdateProductViewController.h"
 #import "Product.h"
+#import "DataAccessObject.h"
 
 @interface UpdateProductViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *updatedProductNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *updatedProductUrlTextField;
-@property (nonatomic, strong) Product *product;
 @property (weak, nonatomic) IBOutlet UIImageView *updateProductLogo;
+@property (nonatomic, strong) Product            *product;
+@property (nonatomic, strong) DataAccessObject   *dao;
 
 @end
 
@@ -22,6 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.dao = [DataAccessObject sharedInstance];
     [self setValuesForSubViews];
 }
 
@@ -35,16 +38,17 @@
 
 #pragma mark - Give Subviews Data
 - (void)setValuesForSubViews {
-    self.product = [self.updateProductArray objectAtIndex:self.indexPath.row];
+    self.product                          = [self.updateProductArray objectAtIndex:self.indexPath.row];
     self.updatedProductNameTextField.text = self.product.productName;
-    self.updatedProductUrlTextField.text = self.product.productUrl;
-    self.updateProductLogo.image = [UIImage imageNamed:@"newBulb.jpg"];
+    self.updatedProductUrlTextField.text  = self.product.productUrl;
+    self.updateProductLogo.image          = [UIImage imageNamed:@"newBulb.jpg"];
 }
 
 - (IBAction)submitUpdatedProductButton:(id)sender {
     self.product.productName = self.updatedProductNameTextField.text;
-    self.product.productUrl = self.updatedProductUrlTextField.text;
+    self.product.productUrl  = self.updatedProductUrlTextField.text;
     self.product.productLogo = @"newBulb.jpg";
+    [self.dao updateProductDataWithQuery:self.product];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

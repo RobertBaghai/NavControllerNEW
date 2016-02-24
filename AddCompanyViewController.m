@@ -8,12 +8,14 @@
 
 #import "AddCompanyViewController.h"
 #import "Company.h"
+#import "DataAccessObject.h"
 
 @interface AddCompanyViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *companyNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *companyStockCodeTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *addedCompanyLogo;
+@property (nonatomic, strong) DataAccessObject *dao;
 
 @end
 
@@ -21,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.dao = [DataAccessObject sharedInstance];
     self.addedCompanyLogo.image = [UIImage imageNamed:@"neutron.jpg"];
 }
 
@@ -30,12 +33,20 @@
 
 #pragma mark - Submit New Company
 - (IBAction)submitButton:(id)sender {
-    Company *company = [[Company alloc] init];
-    company.companyName = self.companyNameTextField.text;
-    company.companyLogo =  @"neutron.jpg";
-    company.stockCode = self.companyStockCodeTextField.text;
+    Company *company        = [[Company alloc] init];
+    company.companyName     = self.companyNameTextField.text;
+    company.companyLogo     = @"neutron.jpg";
+    company.stockCode       = self.companyStockCodeTextField.text;
+    
+    if(self.companyStockCodeTextField.text == nil){
+        company.stockCode = @"N/A";
+    }else{
+        company.stockCode = self.companyStockCodeTextField.text;
+    }
+    
     company.companyProducts = [[NSMutableArray alloc] init];
     [self.addedCompanyArray addObject:company];
+    [self.dao addCompanyWithQuery:company];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

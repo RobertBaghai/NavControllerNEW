@@ -10,7 +10,7 @@
 
 @interface UpdateProductViewController : UIViewController 
 
-@property (nonatomic, strong) NSIndexPath *indexPath;
-@property (nonatomic, weak) NSMutableArray *updateProductArray;
+@property (nonatomic, strong) NSIndexPath    *indexPath;
+@property (nonatomic, weak)   NSMutableArray *updateProductArray;
 
 @end

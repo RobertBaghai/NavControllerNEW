@@ -10,7 +10,8 @@
 
 @interface UrlViewController ()
 
-@property (nonatomic, strong) NSURL *myURL;
+@property (nonatomic, strong) NSURL     *myURL;
+@property (nonatomic, strong) WKWebView *wkWeb;
 
 @end
 
@@ -18,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createWkWeb];
+    [self createWkWebView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,9 +27,9 @@
 }
 
 #pragma mark - Create WKWebView
-- (void)createWkWeb {
+- (void)createWkWebView {
     NSURLRequest *request = [NSURLRequest requestWithURL:self.myURL];
-    self.wkWeb = [[WKWebView alloc] initWithFrame:self.view.frame];
+    self.wkWeb            = [[WKWebView alloc] initWithFrame:self.view.frame];
     [self.wkWeb  loadRequest:request];
     self.wkWeb.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
     self.view = self.wkWeb;
