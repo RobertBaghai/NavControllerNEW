@@ -26,6 +26,7 @@
     [super viewDidLoad];
     self.dao = [DataAccessObject sharedInstance];
     [self setValuesForSubViews];
+    NSLog(@"Company Index = %lu, Product Index = %lu",self.companyIndexPath.row, self.indexPath.row);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,7 +49,8 @@
     self.product.productName = self.updatedProductNameTextField.text;
     self.product.productUrl  = self.updatedProductUrlTextField.text;
     self.product.productLogo = @"newBulb.jpg";
-    [self.dao updateProductDataWithQuery:self.product];
+    NSLog(@"Company Index = %lu, Product Index = %lu",self.companyIndexPath.row, self.indexPath.row);
+    [self.dao updateProduct:self.product atIndex:self.indexPath.row forCompanyIndex:self.companyIndexPath.row];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

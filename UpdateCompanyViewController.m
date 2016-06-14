@@ -48,9 +48,8 @@
     self.company.companyName = self.updatedCompanyNameTextField.text;
     self.company.stockCode   = self.updatedCompanyStockCodeTextField.text;
     self.company.companyLogo = @"newNeutron.jpg";
-    
-    [self.dao updateCompanyDataWithQuery:self.company];
-    
+    NSLog(@"%ld",(long)self.indexPath.row);
+    [self.dao updateCompany:self.company atIndex:self.indexPath.row];    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

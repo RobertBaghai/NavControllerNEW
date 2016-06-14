@@ -13,5 +13,6 @@
 
 @property (nonatomic, weak)   NSMutableArray *addedProductArray;
 @property (nonatomic, strong) Company        *company;
+@property (nonatomic, strong) NSIndexPath    *companyIndex;
 
 @end

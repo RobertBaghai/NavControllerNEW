@@ -13,7 +13,6 @@
 @property (nonatomic, strong) NSString  *productName;
 @property (nonatomic, strong) NSString  *productLogo;
 @property (nonatomic, strong) NSString  *productUrl;
-@property (nonatomic, strong) NSString  *productId;
-@property (nonatomic, assign) NSUInteger productPosition;
+@property (nonatomic, assign) NSNumber  *productPosition;
 
 @end

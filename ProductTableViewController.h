@@ -12,6 +12,7 @@
 @interface ProductTableViewController : UITableViewController 
 
 @property (nonatomic, strong) NSMutableArray *companyProducts;
-@property (nonatomic, strong) Company *company;
+@property (nonatomic, strong) Company        *company;
+@property (nonatomic, strong) NSIndexPath    *companyIndex;
 
 @end

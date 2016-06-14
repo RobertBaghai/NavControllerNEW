@@ -14,8 +14,7 @@
 @property (nonatomic, strong) NSString       *companyLogo;
 @property (nonatomic, strong) NSString       *stockCode;
 @property (nonatomic, strong) NSString       *stockPrice;
-@property (nonatomic, strong) NSString       *companyId;
 @property (nonatomic, strong) NSMutableArray *companyProducts;
-@property (nonatomic, assign) NSUInteger      companyPosition;
+@property (nonatomic, assign) NSNumber       *companyPosition;
 
 @end

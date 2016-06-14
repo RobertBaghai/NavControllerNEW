@@ -37,8 +37,9 @@
     product.productName = self.productNameTextField.text;
     product.productUrl  = self.productUrlTextField.text;
     product.productLogo = @"lightBulb.png";
-    [self.dao addProductWithQuery:product forCompanyId:self.company];
     [self.addedProductArray addObject:product];
+    NSNumber *newPosition  = [NSNumber numberWithInteger:self.addedProductArray.count - 1];
+    [self.dao addProductToContext:product withNewPosition:newPosition toCompanyIndex:self.companyIndex.row];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

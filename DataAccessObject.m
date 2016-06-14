@@ -7,15 +7,20 @@
 //
 
 #import "DataAccessObject.h"
-#import <UIKit/UIKit.h>
+#import "CoreCompany.h"
+#import "CoreProduct.h"
+#import <CoreData/CoreData.h>
 #import "Company.h"
 #import "Product.h"
-#import <sqlite3.h>
 
 @interface DataAccessObject()
 
-@property (nonatomic)         sqlite3  *companyListDataBase;
-@property (nonatomic, strong) NSString *databasePath;
+@property (nonatomic, strong) NSString                     *fileStorePath;
+@property (nonatomic, strong) NSManagedObjectModel         *managedObjectModel;
+@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong) NSFetchRequest               *fetchRequest;
+@property (nonatomic, strong) NSPredicate                  *predicate;
+@property (nonatomic, strong) NSMutableArray               *fetchResultsArray;
 
 @end
 
@@ -33,213 +38,272 @@
     return sharedInstance;
 }
 
-#pragma mark - Get data using SQL
-- (void) createEditableCopyOfDatabaseIfNeeded {
-    NSString *databaseName            = @"NavControllerDataBase.db";
-    NSArray  *path                    = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectoryPath  = path[0];
-    self.databasePath                 = [documentsDirectoryPath stringByAppendingPathComponent:databaseName];
-    NSLog(@"DB Path %@", self.databasePath);
-    [self checkIfFileExistsAtPath];
-    
-    sqlite3_stmt *company_statement;
-    sqlite3_stmt *product_statement;
-    const char   *dbPath = [self.databasePath UTF8String];
-    
-    if (sqlite3_open(dbPath, &_companyListDataBase) == SQLITE_OK) {
-        NSLog(@"Database opened");
-        NSString *selectCompanies = @"SELECT * FROM Company ORDER BY c_position";
-        const char *query_companies = [selectCompanies UTF8String];
-        if (sqlite3_prepare(self.companyListDataBase, query_companies, -1, &company_statement, NULL) == SQLITE_OK) {
-            while ( sqlite3_step(company_statement) == SQLITE_ROW ) {
-                NSString *company_id         = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(company_statement, 0)];
-                NSString *company_name       = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(company_statement, 1)];
-                NSString *company_logo       = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(company_statement, 2)];
-                NSString *company_stock_code = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(company_statement, 3)];
-                Company  *company            = [[Company alloc]  init];
-                company.companyId            = company_id;
-                company.companyName          = company_name;
-                company.companyLogo          = company_logo;
-                company.stockCode            = company_stock_code;
-                company.companyProducts      = [[NSMutableArray alloc] init];
-                
-                NSString *selectProducts = [NSString stringWithFormat:@"SELECT * FROM Product WHERE company_id = %d ORDER BY p_position",[company_id intValue]];
-                const char *query_products = [selectProducts UTF8String];
-                if (sqlite3_prepare(self.companyListDataBase, query_products, -1, &product_statement, NULL) == SQLITE_OK) {
-                    while ( sqlite3_step(product_statement) == SQLITE_ROW ) {
-                        NSString *product_id   = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(product_statement, 0)];
-                        NSString *product_name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(product_statement, 1)];
-                        NSString *product_logo = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(product_statement, 2)];
-                        NSString *product_url  = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(product_statement, 3)];
-                        Product  *product      = [[Product alloc]  init];
-                        product.productId      = product_id;
-                        product.productName    = product_name;
-                        product.productLogo    = product_logo;
-                        product.productUrl     = product_url;
-                        [company.companyProducts addObject:product];
-                    }
-                }
-                [self.companyList addObject:company];
-            }
-        }
-        // Release the compiled statements from memory.
-        sqlite3_finalize(company_statement);
-        sqlite3_finalize(product_statement);
-    }
-    sqlite3_close(self.companyListDataBase);
+#pragma mark - Create Path
+- (NSString *) archiveStoreFilePath {
+    NSArray  *documentDirectory     = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectoryPath = documentDirectory[0];
+    self.fileStorePath              = [documentDirectoryPath stringByAppendingPathComponent:@"CompanyList.data"];
+
+    return self.fileStorePath;
 }
 
-#pragma mark - Check for Database
-- (void) checkIfFileExistsAtPath {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:self.databasePath]) {
-        NSString *appDatabaseBundlePath = [[NSBundle mainBundle] pathForResource:@"NavControllerDataBase" ofType:@"db"];
+#pragma mark - Set up ManagedObjectContext
+- (void) initModelContext {
+    self.managedObjectModel         = [NSManagedObjectModel mergedModelFromBundles:nil];
+    self.persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
+    NSURL *storeUrl                 = [NSURL fileURLWithPath:[self archiveStoreFilePath]];
+    NSString *path = [self archiveStoreFilePath];
+    NSLog(@"Store Path -- %@",path);
+    NSError *error = nil;
+    if(![self.persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]){
+        [NSException raise:@"Open failed" format:@"Reason: %@", [error localizedDescription]];
+    }
+    self.managedObjectContext         = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    self.managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator;
+}
+
+- (void)readFromCoreDataIfExistsElseCreateFileAndRead {
+    [self initModelContext];
+    self.fetchRequest                        = [[NSFetchRequest alloc] init];
+    self.predicate                           = [NSPredicate predicateWithFormat:@"companyName MATCHES '.*'"];
+    self.fetchRequest.predicate              = self.predicate;
+    NSSortDescriptor *sortCompanyByPosition  = [[NSSortDescriptor alloc] initWithKey:@"companyPosition" ascending:YES];
+    self.fetchRequest.sortDescriptors        = [NSArray arrayWithObject: sortCompanyByPosition];
+    NSEntityDescription *entity              = [[self.managedObjectModel entitiesByName]objectForKey:@"Company"];
+    self.fetchRequest.entity                 = entity;
+    
+    NSError *error = nil;
+    NSArray *fetch = [self.managedObjectContext executeFetchRequest:self.fetchRequest error:&error];
+    self.fetchResultsArray = [[NSMutableArray alloc] initWithArray:fetch];
+    
+    /*
+        *Checks to see if data is saved in core data
+        *If there is no data saved then load hard coded values into core data
+        *Else just read what is saved in core data
+     */
+    
+    if ( self.fetchResultsArray.count == 0 ) {
+        [self loadHardCodedValuesIntoManagedContext];
+        int i = 0;
+        NSNumber *position;
+        for (Company *company in self.companyList) {
+            position = [NSNumber numberWithInt:i];
+            company.companyPosition = position;
+            [self createManagedObjectsUsingCompany:company];
+            i++;
+        }
+        [self saveContext];
+        NSArray *fetch = [self.managedObjectContext executeFetchRequest:self.fetchRequest error:&error];
+        self.fetchResultsArray = [[NSMutableArray alloc]initWithArray:fetch];
+    } else {
+        for (CoreCompany *managedCompany in self.fetchResultsArray) {
+            Company *company        = [[Company alloc] init];
+            company.companyName     = managedCompany.companyName;
+            company.companyLogo     = managedCompany.companyLogo;
+            company.stockCode       = managedCompany.companyStockCode;
+            company.companyPosition = managedCompany.companyPosition;
+            company.companyProducts = [[NSMutableArray alloc] init];
+            
+            NSSortDescriptor *sortByProdPosition = [[NSSortDescriptor alloc] initWithKey:@"productPosition" ascending:YES];
+            NSArray *products                = [managedCompany.products sortedArrayUsingDescriptors:@[sortByProdPosition]];
+            for(CoreProduct *managedProduct in products) {
+                Product *product        = [[Product alloc] init];
+                product.productName     = managedProduct.productName;
+                product.productLogo     = managedProduct.productLogo;
+                product.productUrl      = managedProduct.productUrl;
+                product.productPosition = managedProduct.productPosition;
+                [company.companyProducts addObject:product];
+            }
+            [self.companyList addObject:company];
+        }
+        NSArray *fetch = [self.managedObjectContext executeFetchRequest:self.fetchRequest error:&error];
+        self.fetchResultsArray = [[NSMutableArray alloc]initWithArray:fetch];
+    }
+}
+
+#pragma mark - Add Using Core Data
+- (void)addCompanyToContext: (Company*)company withNewPosition:(NSNumber*)position {
+    CoreCompany *addCompany     = (CoreCompany*)[NSEntityDescription insertNewObjectForEntityForName:@"Company" inManagedObjectContext:self.managedObjectContext];
+    addCompany.companyName      = company.companyName;
+    addCompany.companyLogo      = company.companyLogo;
+    addCompany.companyStockCode = company.stockCode;
+    addCompany.companyPosition  = position;
+    [self saveContext];
+}
+
+- (void)addProductToContext: (Product*)product withNewPosition:(NSNumber*)position toCompanyIndex:(long)index {
+    CoreProduct *addProduct = (CoreProduct*)[NSEntityDescription insertNewObjectForEntityForName:@"Product" inManagedObjectContext:self.managedObjectContext];
+    addProduct.productName     = product.productName;
+    addProduct.productLogo     = product.productLogo;
+    addProduct.productUrl      = product.productUrl;
+    addProduct.productPosition = position;
+    
+    CoreCompany *coreCompany = (CoreCompany*)[self.fetchResultsArray objectAtIndex:index];
+    [coreCompany addProductsObject:addProduct];
+    
+    [self saveContext];
+}
+
+#pragma mark - Delete Using Core Data
+- (void)deleteCompanyfromContext:(long)index {
+    CoreCompany *deleteCompany = (CoreCompany*)[self.fetchResultsArray objectAtIndex:index];
+    [self.managedObjectContext deleteObject:deleteCompany];
+    [self.fetchResultsArray removeObject:deleteCompany];
+    
+    NSError *error = nil;
+    if (![deleteCompany.managedObjectContext save:&error]) {
+        NSLog(@"Error -- %@, %@",error.localizedDescription, error.userInfo);
+    }
+    [self saveContext];
+}
+
+- (void)deleteProductFromContext:(long)index fromCompanyIndex:(long)companyIndex {
+    CoreCompany *deleteFromCompany = (CoreCompany*)[self.fetchResultsArray objectAtIndex:companyIndex];
+    CoreProduct *deleteProduct     = (CoreProduct*)[[deleteFromCompany.products allObjects]objectAtIndex:index];
+    [self.managedObjectContext deleteObject:deleteProduct];
+    [deleteFromCompany removeProductsObject:deleteProduct];
+    [self.fetchResultsArray removeObject:deleteProduct];
+    [self saveContext];
+}
+
+#pragma mark - Update Using Core Data
+-(void)updateCompany:(Company*)company atIndex:(long)index {
+    CoreCompany *updateCompany = (CoreCompany *)[self.fetchResultsArray objectAtIndex:index];
+    updateCompany.companyName = company.companyName;
+    updateCompany.companyLogo = company.companyLogo;
+    updateCompany.companyStockCode = company.stockCode;
+    updateCompany.companyPosition = company.companyPosition;
+    [self saveContext];
+}
+
+
+-(void)updateProduct:(Product*) product atIndex:(long)index forCompanyIndex:(long)companyIndex {
+    CoreCompany *company          = [self.fetchResultsArray objectAtIndex:companyIndex];
+    CoreProduct *updateProduct    = (CoreProduct*)[[company.products allObjects]objectAtIndex:index];
+    updateProduct.productName     = product.productName;
+    updateProduct.productUrl      = product.productUrl;
+    updateProduct.productLogo     = product.productLogo;
+    updateProduct.productPosition = product.productPosition;
+    [self saveContext];
+}
+
+#pragma mark - Move Using Core Data
+-(void)moveCompany:(Company*)company fromIndex:(long)index toIndex:(long)newIndex {
+    CoreCompany *moveCompany = [self.fetchResultsArray objectAtIndex:index];
+    moveCompany.companyPosition = @(newIndex);
+    [self.fetchResultsArray exchangeObjectAtIndex:index withObjectAtIndex:newIndex];
+    [self saveContext];
+}
+
+-(void)moveProductfromIndex:(long)index toIndex:(long)newIndex forCompanyIndex:(long)companyIndex {
+    CoreCompany *company          = [self.fetchResultsArray objectAtIndex:companyIndex];
+    CoreProduct *updateProduct    = (CoreProduct*)[[company.products allObjects]objectAtIndex:index];
+    updateProduct.productPosition = @(newIndex);
+    [self saveContext];
+}
+
+#pragma mark - Helper Methods
+-(void)createManagedObjectsUsingCompany:(Company *)company {
+    CoreCompany *managedCompany = (CoreCompany*)[NSEntityDescription insertNewObjectForEntityForName:@"Company"
+                                                                              inManagedObjectContext:self.managedObjectContext];
+    managedCompany.companyName      = company.companyName;
+    managedCompany.companyLogo      = company.companyLogo;
+    managedCompany.companyStockCode = company.stockCode;
+    managedCompany.companyPosition  = company.companyPosition;
+    
+    for (Product *product in company.companyProducts) {
+         CoreProduct *managedProduct  = (CoreProduct*) [NSEntityDescription insertNewObjectForEntityForName:@"Product" inManagedObjectContext:self.managedObjectContext];
+        managedProduct.productName     = product.productName;
+        managedProduct.productLogo     = product.productLogo;
+        managedProduct.productUrl      = product.productUrl;
+        managedProduct.productPosition = product.productPosition;
+        [managedCompany addProductsObject:managedProduct];
+    }
+
+}
+
+#pragma mark - Save ManagedObjectContext
+- (void)saveContext {
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext != nil) {
         NSError *error = nil;
-        [[NSFileManager defaultManager] copyItemAtPath:appDatabaseBundlePath toPath:self.databasePath error:&error];
-        if ( error ) {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Oops!" message:[NSString stringWithFormat:@"%@",error.userInfo] preferredStyle:UIAlertControllerStyleActionSheet];
-            UIAlertAction *alert = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action){
-                //Just Dismiss Alert
-            }];
-            [alertController addAction:alert];
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         }
     }
+    NSLog(@"Data Saved");
 }
 
-#pragma mark - Delete using SQL
-- (void) deleteCompanyWithQuery: (Company*)company {
-    char *error;
-    char *errorTwo;
-    NSString *deleteCompanyQuery          = [NSString stringWithFormat:@"DELETE FROM Company WHERE c_name IS '%@'", company.companyName];
-    NSString *deleteProdFromDeleteCompany = [NSString stringWithFormat:@"DELETE FROM Product WHERE company_id IS '%d'",[company.companyId intValue]];
+
+#pragma mark - Hard Coded Values
+- (void) loadHardCodedValuesIntoManagedContext {
+    Company *apple          = [[Company alloc] init];
+    apple.companyName       = @"Apple Mobile Devices";
+    apple.companyLogo       = @"apple.jpg";
+    apple.stockCode         = @"AAPL";
+    apple.companyPosition   = @0;
+    Product *iPad           = [[Product alloc] init];
+    iPad.productName        = @"iPad";
+    iPad.productLogo        = @"ipad.jpg";
+    iPad.productUrl         = @"https://www.apple.com/ipad/";
+    iPad.productPosition    = @0;
+    Product *iPod           = [[Product alloc] init];
+    iPod.productName        = @"iPod Touch";
+    iPod.productLogo        = @"ipod.jpg";
+    iPod.productUrl         = @"https://www.apple.com/ipod-touch/";
+    iPod.productPosition    = @1;
+    Product *iPhone         = [[Product alloc] init];
+    iPhone.productName      = @"iPhone";
+    iPhone.productLogo      = @"iphone.jpg";
+    iPhone.productUrl       = @"https://www.apple.com/iphone/";
+    iPhone.productPosition  = @2;
+    apple.companyProducts   = [[NSMutableArray alloc] initWithObjects:iPad, iPod, iPhone, nil];
     
-    if (sqlite3_exec(self.companyListDataBase, [deleteCompanyQuery UTF8String], NULL, NULL, &error) == SQLITE_OK) {
-        NSLog(@"Company '%@' has been deleted.",company.companyName);
-    }
-    if (sqlite3_exec(self.companyListDataBase, [deleteProdFromDeleteCompany UTF8String], NULL, NULL, &errorTwo) == SQLITE_OK) {
-        NSLog(@"Products for company '%@' have been deleted.",company.companyName);
-    }
-    sqlite3_close(self.companyListDataBase);
+    Company *samsung        = [[Company alloc] init];
+    samsung.companyName     = @"Samsung Mobile Devices";
+    samsung.companyLogo     = @"samsung.jpg";
+    samsung.stockCode       = @"SSUN.DE";
+    samsung.companyPosition   = @1;
+    Product *galaxy         = [[Product alloc] init];
+    galaxy.productName      = @"Galaxy S5";
+    galaxy.productLogo      = @"s5.jpg";
+    galaxy.productUrl       = @"http://www.samsung.com/global/microsite/galaxys5/features.html";
+    galaxy.productPosition  = @0;
+    Product *note           = [[Product alloc] init];
+    note.productName        = @"Galaxy Note";
+    note.productLogo        = @"note.jpg";
+    note.productUrl         = @"https://www.samsung.com/us/mobile/galaxy-note/";
+    note.productPosition    = @1;
+    Product *tab            = [[Product alloc] init];
+    tab.productName         = @"Galaxy Tab";
+    tab.productLogo         = @"tablet.jpg";
+    tab.productUrl          = @"https://www.samsung.com/us/explore/tab-s2-features-and-specs/?cid=ppc-";
+    tab.productPosition     = @2;
+    samsung.companyProducts = [[NSMutableArray alloc] initWithObjects:galaxy, note, tab, nil];
+    
+    Company *htc            = [[Company alloc] init];
+    htc.companyName         = @"HTC Mobile Devices";
+    htc.companyLogo         = @"htc.png";
+    htc.stockCode           = @"GOOG";
+    htc.companyPosition     = @2;
+    Product *htcOne         = [[Product alloc] init];
+    htcOne.productName      = @"HTC One M9";
+    htcOne.productLogo      = @"htcone.jpg";
+    htcOne.productUrl       = @"https://www.htc.com/us/smartphones/htc-one-m9/";
+    htcOne.productPosition  = @0;
+    Product *nexus          = [[Product alloc] init];
+    nexus.productName       = @"Google Nexus";
+    nexus.productLogo       = @"nexus.jpg";
+    nexus.productUrl        = @"https://store.google.com/product/nexus_6p?utm_source=en-ha-na-sem&utm_medium=text&utm_content=skws&utm_campaign=nexus6p&gclid=CjwKEAjws7OwBRCn2Ome5tPP8gESJAAfopWsF1f3gGR_3ME1Ixcmv8sq_vO9pzHjJwS6Sf_ztXnn_hoCiRDw_wcB";
+    nexus.productPosition   = @1;
+    Product *camera         = [[Product alloc] init];
+    camera.productName      = @"RE Camera";
+    camera.productLogo      = @"camera.jpg";
+    camera.productUrl       = @"https://www.htc.com/us/re/re-camera/";
+    camera.productPosition  = @2;
+    htc.companyProducts     = [[NSMutableArray alloc] initWithObjects: htcOne, nexus, camera, nil];
+    
+    self.companyList        = [NSMutableArray arrayWithArray:@[apple, samsung, htc]];
 }
-
-- (void) deleteProductWithQuery:(Product*)product {
-    NSString *deleteProductQuery   = [NSString stringWithFormat:@"DELETE FROM Product WHERE p_name IS '%@'",product.productName];
-    char *error;
-    if (sqlite3_exec(self.companyListDataBase, [deleteProductQuery UTF8String], NULL, NULL, &error) == SQLITE_OK) {
-        NSLog(@"Product '%@' has been deleted.",product.productName);
-    }
-    sqlite3_close(self.companyListDataBase);
-}
-
-#pragma mark - Add using SQL
-- (void) addCompanyWithQuery: (Company*)company {
-    int companyPosition = [self fetchMaxCompanyPosition];
-    char *error;
-    NSString *addQuery = [NSString stringWithFormat:@"INSERT INTO Company (c_name,c_logo,c_stockCode,c_position) VALUES ('%@','%@','%@','%d')",company.companyName, company.companyLogo, company.stockCode, companyPosition];
-    if (sqlite3_exec(self.companyListDataBase, [addQuery UTF8String], NULL, NULL, &error) == SQLITE_OK) {
-        NSLog(@"Company '%@' has been added.",company.companyName);
-    }
-    sqlite3_close(self.companyListDataBase);
-}
-
-- (void) addProductWithQuery:(Product*)product forCompanyId:(Company*)company {
-    int productPosition = [self fetchMaxProductPosition];
-    char *error;
-    NSString *addQuery = [NSString stringWithFormat:@"INSERT INTO Product (p_name, p_logo, p_url, company_id, p_position) VALUES ('%@','%@','%@','%d','%d')", product.productName, product.productLogo, product.productUrl, [company.companyId intValue], productPosition];
-    if (sqlite3_exec(self.companyListDataBase, [addQuery UTF8String], NULL, NULL, &error) == SQLITE_OK) {
-        NSLog(@"Product '%@' has been added.",product.productName);
-    }
-    sqlite3_close(self.companyListDataBase);
-}
-
-#pragma mark - Update using SQL
-- (void) updateCompanyDataWithQuery:(Company*)company {
-    char *error;
-    NSString *editQuery = [NSString stringWithFormat:@"UPDATE Company SET c_name = '%@', c_logo = '%@', c_stockCode = '%@' WHERE id = '%d'", company.companyName, company.companyLogo, company.stockCode, [company.companyId intValue]];
-    if (sqlite3_exec(self.companyListDataBase, [editQuery UTF8String], NULL, NULL, &error) == SQLITE_OK) {
-        NSLog(@"Company '%@' has been updated.",company.companyName);
-    }
-    sqlite3_close(self.companyListDataBase);
-}
-
-- (void) updateProductDataWithQuery:(Product*)product {
-    char *error;
-    NSString *editQuery = [NSString stringWithFormat:@"UPDATE Product SET p_name = '%@', p_logo = '%@', p_url = '%@' WHERE id = '%d'",product.productName, product.productLogo, product.productUrl, [product.productId intValue]];
-    if (sqlite3_exec(self.companyListDataBase, [editQuery UTF8String], NULL, NULL, &error) == SQLITE_OK) {
-        NSLog(@"Product '%@' has been updated.",product.productName);
-    }
-    sqlite3_close(self.companyListDataBase);
-}
-
-#pragma mark - Move using SQL
-- (void) moveCompanyWithQuery: (Company*)company {
-    char *error;
-    for (int i = 0 ; i < self.companyList.count; i++) {
-        company = [self.companyList objectAtIndex:i];
-        NSString *moveQuery = [NSString stringWithFormat:@"UPDATE Company SET c_position = '%d' WHERE id = '%d'",i + 1, [company.companyId intValue]];
-        if (sqlite3_exec(self.companyListDataBase, [moveQuery UTF8String], NULL, NULL, &error) == SQLITE_OK) {
-            NSLog(@"Company '%@' move to index %d.",company.companyName, i);
-        }
-    }
-    sqlite3_close(self.companyListDataBase);
-}
-
-- (void) moveProductWithQuery: (Product*)product usingArray: (NSMutableArray*)companyProducts {
-    char *error;
-    for (int i = 0; i < companyProducts.count; i++) {
-        product = [companyProducts objectAtIndex:i];
-        NSString *moveQuery = [NSString stringWithFormat:@"UPDATE Product SET p_position = '%d' WHERE id = '%d'", i + 1, [product.productId intValue]];
-        if (sqlite3_exec(self.companyListDataBase, [moveQuery UTF8String], NULL, NULL, &error) == SQLITE_OK) {
-            NSLog(@"Product '%@' move to index %d.", product.productName, i);
-        }
-    }
-    sqlite3_close(self.companyListDataBase);
-}
-
-#pragma mark - Find Max Positon Using SQL
-- (int) fetchMaxCompanyPosition {
-    NSString *maxPositionString = nil;
-    int newMaxPosition          = 0;
-    sqlite3_stmt *statement;
-    NSString *query = [NSString stringWithFormat:@"SELECT MAX(c_position) FROM Company"];
-    if (sqlite3_prepare(self.companyListDataBase, [query UTF8String], -1, &statement, NULL) == SQLITE_OK) {
-        while (sqlite3_step( statement ) == SQLITE_ROW) {
-            const unsigned char *currentMaxPosition = sqlite3_column_text(statement, 0);
-            NSLog(@"Company max position %s",currentMaxPosition);
-            if ( currentMaxPosition == NULL ) {
-                newMaxPosition = 1;
-            } else {
-                maxPositionString =  [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
-                newMaxPosition    = [maxPositionString intValue]+1;
-            }
-        }
-        sqlite3_finalize(statement);
-    }
-    sqlite3_close(self.companyListDataBase);
-    return newMaxPosition;
-}
-
-- (int) fetchMaxProductPosition {
-    NSString *maxPositionString = nil;
-    int newMaxPosition          = 0;
-    sqlite3_stmt *statement;
-    NSString *query = [NSString stringWithFormat:@"SELECT MAX(p_position) FROM Product"];
-    if (sqlite3_prepare(self.companyListDataBase, [query UTF8String], -1, &statement, NULL) == SQLITE_OK) {
-        while (sqlite3_step( statement ) == SQLITE_ROW) {
-            const unsigned char *currentMaxPosition = sqlite3_column_text(statement, 0);
-            NSLog(@"Product max position = %s",currentMaxPosition);
-            if ( currentMaxPosition == NULL ) {
-                newMaxPosition    = 1;
-            } else {
-                maxPositionString = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
-                newMaxPosition    = [maxPositionString intValue] + 1;
-            }
-        }
-        sqlite3_finalize(statement);
-    }
-    sqlite3_close(self.companyListDataBase);
-    return newMaxPosition;
-}
-
 
 @end

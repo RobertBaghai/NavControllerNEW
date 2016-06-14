@@ -7,33 +7,35 @@
 //
 
 #import <Foundation/Foundation.h>
-@class Company;
-@class Product;
+@import CoreData;
+@class  Company;
+@class  Product;
 
 @interface DataAccessObject : NSObject
 
-@property (nonatomic, strong) NSMutableArray *companyList;
+@property (nonatomic, strong) NSMutableArray               *companyList;
+@property (nonatomic, strong) NSManagedObjectContext       *managedObjectContext;
 
 #pragma mark - Shared Instance Method
 + (instancetype)sharedInstance;
 
-#pragma mark - Get Data using SQL
-- (void) createEditableCopyOfDatabaseIfNeeded;
+#pragma mark - Read/Write To Core Data
+- (void)readFromCoreDataIfExistsElseCreateFileAndRead;
 
-#pragma mark - Delete using SQL
-- (void) deleteCompanyWithQuery     : (Company*)company;
-- (void) deleteProductWithQuery     : (Product*)product;
+#pragma mark - Add Using Core Data
+- (void)addCompanyToContext: (Company*)company withNewPosition:(NSNumber*)position;
+- (void)addProductToContext: (Product*)product withNewPosition:(NSNumber*)position toCompanyIndex:(long)index;
 
-#pragma mark - Add using SQL
-- (void) addCompanyWithQuery        : (Company*)company;
-- (void) addProductWithQuery        : (Product*)product forCompanyId:(Company*)company;
+#pragma mark - Delete Using Core Data
+- (void)deleteCompanyfromContext:(long)index;
+- (void)deleteProductFromContext:(long)index fromCompanyIndex:(long)companyIndex;
 
-#pragma mark - Update using SQL
-- (void) updateCompanyDataWithQuery : (Company*)company;
-- (void) updateProductDataWithQuery : (Product*)product;
+#pragma mark - Update Using Core Data
+-(void)updateCompany:(Company*)company atIndex:(long)index;
+-(void)updateProduct:(Product*) product atIndex:(long)index forCompanyIndex:(long)companyIndex;
 
-#pragma mark - Move using SQL
-- (void) moveCompanyWithQuery       : (Company*)company;
-- (void) moveProductWithQuery       : (Product*)product usingArray: (NSMutableArray*)companyProducts;
+#pragma mark - Move Using Core Data
+-(void)moveCompany:(Company*)company fromIndex:(long)index toIndex:(long)newIndex;
+-(void)moveProductfromIndex:(long)index toIndex:(long)newIndex forCompanyIndex:(long)companyIndex;
 
 @end

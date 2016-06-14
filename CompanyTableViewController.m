@@ -30,8 +30,7 @@
     self.title = @"Mobile Devices";
     [self createRightBarButtonItems];
     self.dao = [DataAccessObject sharedInstance];
-    [self.dao createEditableCopyOfDatabaseIfNeeded];
-    NSLog(@"Company List = %@", self.dao.companyList);
+    [self.dao readFromCoreDataIfExistsElseCreateFileAndRead];
     [self addRefeshControlForTableView];
     [self addLongPressToTableView];
     self.tableView.backgroundColor = [UIColor grayColor];
@@ -55,7 +54,7 @@
 }
 
 - (void)add:(id)sender {
-    [self performSegueWithIdentifier:@"addCompanies" sender:self.dao.companyList];
+    [self performSegueWithIdentifier:@"addCompanies" sender:nil];
 }
 
 #pragma mark - Add Scroll To Refresh
@@ -88,6 +87,7 @@
                 } else {
                     NSString *stockString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
                     NSUInteger index = 0;
+                    
                     for (NSString *stockPrice in [stockString componentsSeparatedByString:@"\n"]) {
                         if (index == self.dao.companyList.count) break;
                         [[self.dao.companyList objectAtIndex:index]setStockPrice:stockPrice];
@@ -110,9 +110,8 @@
 
 - (IBAction)addCompanyLongPressAction:(UILongPressGestureRecognizer *)sender {
     if ( sender.state == UIGestureRecognizerStateRecognized ) {
-        UITableView *tableView = (UITableView*)self.view;
         CGPoint touchPoint = [sender locationInView:self.view];
-        self.indexPath = [tableView indexPathForRowAtPoint:touchPoint];
+        self.indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
         NSLog(@"Cell Index = %ld",(long)self.indexPath.row);
         [self performSegueWithIdentifier:@"updateCompany" sender:self.dao.companyList];
     }
@@ -132,17 +131,17 @@
     if( !cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
     }
+    
     Company *company               = [self.dao.companyList objectAtIndex:indexPath.row];
     cell.textLabel.text            = company.companyName;
     cell.textLabel.textColor       = [UIColor blueColor];
     cell.imageView.image           = [UIImage imageNamed:company.companyLogo];
     
     NSString *stockPrice = nil;
-    if (company.stockPrice == nil) {
+    if (company.stockPrice == nil)
         stockPrice = @"No Stock Info Available";
-    } else {
+    else
         stockPrice = [@"Current Stock Price: " stringByAppendingString:company.stockPrice];
-    }
     
     cell.detailTextLabel.text      = stockPrice;
     cell.detailTextLabel.textColor = [UIColor redColor];
@@ -157,8 +156,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ( editingStyle == UITableViewCellEditingStyleDelete ) {
-        Company *company = [self.dao.companyList objectAtIndex:indexPath.row];
-        [self.dao deleteCompanyWithQuery:company];
+        [self.dao deleteCompanyfromContext:indexPath.row];
         [self.dao.companyList removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -168,7 +166,7 @@
     Company *company = [self.dao.companyList objectAtIndex: fromIndexPath.row];
     [self.dao.companyList removeObjectAtIndex: fromIndexPath.row];
     [self.dao.companyList insertObject:company atIndex: toIndexPath.row];
-    [self.dao moveCompanyWithQuery:company];
+    [self.dao moveCompany:company fromIndex:fromIndexPath.row toIndex:toIndexPath.row];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -177,6 +175,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.company = [self.dao.companyList objectAtIndex:indexPath.row];
+    NSLog(@"Company name = %@ , company position = %@", self.company.companyName, self.company.companyPosition);
     [self performSegueWithIdentifier:@"showProducts" sender:self.company];
 }
 
@@ -187,17 +186,12 @@
         productTableView.company                     = sender;
         productTableView.companyProducts             = self.company.companyProducts;
         productTableView.title                       = self.company.companyName;
-        
-    } else if ( [segue.identifier isEqualToString:@"addCompanies"] ) {
-        AddCompanyViewController *addCompany = (AddCompanyViewController*)segue.destinationViewController;
-        addCompany.addedCompanyArray         = sender;
+        productTableView.companyIndex                = [self.tableView indexPathForSelectedRow];
         
     } else if ( [segue.identifier isEqualToString:@"updateCompany"] ) {
         UpdateCompanyViewController *updateCompany = (UpdateCompanyViewController*)segue.destinationViewController;
         updateCompany.updatedCompanyArray          = sender;
-        if ( self.indexPath != nil ) {
-            updateCompany.indexPath = self.indexPath;
-        }
+        updateCompany.indexPath = self.indexPath;
     }
 }
 

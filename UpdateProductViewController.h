@@ -11,6 +11,7 @@
 @interface UpdateProductViewController : UIViewController 
 
 @property (nonatomic, strong) NSIndexPath    *indexPath;
+@property (nonatomic, strong) NSIndexPath    *companyIndexPath;
 @property (nonatomic, weak)   NSMutableArray *updateProductArray;
 
 @end

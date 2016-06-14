@@ -7,27 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		431314851C402A39006B4083 /* apple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 431314841C402A39006B4083 /* apple.jpg */; };
-		431314871C402AD6006B4083 /* samsung.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 431314861C402AD6006B4083 /* samsung.jpg */; };
-		431314891C402B17006B4083 /* htc.png in Resources */ = {isa = PBXBuildFile; fileRef = 431314881C402B17006B4083 /* htc.png */; };
 		4313148C1C403C33006B4083 /* ProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4313148B1C403C33006B4083 /* ProductTableViewController.m */; };
-		431314901C404D77006B4083 /* ipad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4313148D1C404D77006B4083 /* ipad.jpg */; };
-		431314911C404D77006B4083 /* iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4313148E1C404D77006B4083 /* iphone.jpg */; };
-		431314921C404D77006B4083 /* ipod.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4313148F1C404D77006B4083 /* ipod.jpg */; };
-		431314971C405231006B4083 /* note.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 431314941C405231006B4083 /* note.jpg */; };
-		431314981C405231006B4083 /* s5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 431314951C405231006B4083 /* s5.jpg */; };
-		431314991C405231006B4083 /* tablet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 431314961C405231006B4083 /* tablet.jpg */; };
-		4313149D1C4052CC006B4083 /* camera.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4313149A1C4052CC006B4083 /* camera.jpg */; };
-		4313149E1C4052CC006B4083 /* htcone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4313149B1C4052CC006B4083 /* htcone.jpg */; };
-		4313149F1C4052CC006B4083 /* nexus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4313149C1C4052CC006B4083 /* nexus.jpg */; };
 		431314A21C40552B006B4083 /* UrlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 431314A11C40552B006B4083 /* UrlViewController.m */; };
+		4328393F1C7E633D00BB6006 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4328393D1C7E633D00BB6006 /* DataModel.xcdatamodeld */; };
+		432839481C7E722300BB6006 /* CoreProduct+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 432839411C7E722300BB6006 /* CoreProduct+CoreDataProperties.m */; };
+		432839491C7E722300BB6006 /* CoreProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 432839431C7E722300BB6006 /* CoreProduct.m */; };
+		4328394A1C7E722300BB6006 /* CoreCompany+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 432839451C7E722300BB6006 /* CoreCompany+CoreDataProperties.m */; };
+		4328394B1C7E722300BB6006 /* CoreCompany.m in Sources */ = {isa = PBXBuildFile; fileRef = 432839471C7E722300BB6006 /* CoreCompany.m */; };
 		432BDC3E1C764D3900248B55 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 432BDC3D1C764D3900248B55 /* libsqlite3.tbd */; };
 		4342291F1C40B14C00569807 /* AddCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4342291E1C40B14C00569807 /* AddCompanyViewController.m */; };
 		434229221C40B2B400569807 /* AddProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 434229211C40B2B400569807 /* AddProductsViewController.m */; };
-		435FD4211C46C40D000FDF07 /* neutron.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 435FD4201C46C40D000FDF07 /* neutron.jpg */; };
-		435FD4231C46CCCA000FDF07 /* newNeutron.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 435FD4221C46CCCA000FDF07 /* newNeutron.jpg */; };
-		435FD4261C46CDFC000FDF07 /* lightBulb.png in Resources */ = {isa = PBXBuildFile; fileRef = 435FD4241C46CDFC000FDF07 /* lightBulb.png */; };
-		435FD4271C46CDFC000FDF07 /* newBulb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 435FD4251C46CDFC000FDF07 /* newBulb.jpg */; };
 		436C79131C4321080091F865 /* UpdateCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C79121C4321080091F865 /* UpdateCompanyViewController.m */; };
 		436C79161C4321150091F865 /* UpdateProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C79151C4321150091F865 /* UpdateProductViewController.m */; };
 		437561811C40089200351D86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 437561801C40089200351D86 /* main.m */; };
@@ -41,7 +30,6 @@
 		437561BA1C4013D700351D86 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 437561B91C4013D700351D86 /* Company.m */; };
 		437561BD1C4013E200351D86 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 437561BC1C4013E200351D86 /* Product.m */; };
 		437561C01C4013F800351D86 /* DataAccessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 437561BF1C4013F800351D86 /* DataAccessObject.m */; };
-		43AF8D1E1C767F5200620E29 /* NavControllerDataBase.db in Resources */ = {isa = PBXBuildFile; fileRef = 43AF8D1D1C767F5200620E29 /* NavControllerDataBase.db */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,31 +50,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		431314841C402A39006B4083 /* apple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = apple.jpg; path = "Nav Controller Re-Done/apple.jpg"; sourceTree = "<group>"; };
-		431314861C402AD6006B4083 /* samsung.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = samsung.jpg; path = "Nav Controller Re-Done/samsung.jpg"; sourceTree = "<group>"; };
-		431314881C402B17006B4083 /* htc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = htc.png; path = "Nav Controller Re-Done/htc.png"; sourceTree = "<group>"; };
 		4313148A1C403C33006B4083 /* ProductTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductTableViewController.h; sourceTree = "<group>"; };
 		4313148B1C403C33006B4083 /* ProductTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductTableViewController.m; sourceTree = "<group>"; };
-		4313148D1C404D77006B4083 /* ipad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ipad.jpg; path = "Nav Controller Re-Done/ipad.jpg"; sourceTree = "<group>"; };
-		4313148E1C404D77006B4083 /* iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = iphone.jpg; path = "Nav Controller Re-Done/iphone.jpg"; sourceTree = "<group>"; };
-		4313148F1C404D77006B4083 /* ipod.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ipod.jpg; path = "Nav Controller Re-Done/ipod.jpg"; sourceTree = "<group>"; };
-		431314941C405231006B4083 /* note.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = note.jpg; sourceTree = "<group>"; };
-		431314951C405231006B4083 /* s5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = s5.jpg; sourceTree = "<group>"; };
-		431314961C405231006B4083 /* tablet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tablet.jpg; sourceTree = "<group>"; };
-		4313149A1C4052CC006B4083 /* camera.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = camera.jpg; sourceTree = "<group>"; };
-		4313149B1C4052CC006B4083 /* htcone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = htcone.jpg; sourceTree = "<group>"; };
-		4313149C1C4052CC006B4083 /* nexus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nexus.jpg; sourceTree = "<group>"; };
 		431314A01C40552B006B4083 /* UrlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UrlViewController.h; sourceTree = "<group>"; };
 		431314A11C40552B006B4083 /* UrlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UrlViewController.m; sourceTree = "<group>"; };
+		4328393E1C7E633D00BB6006 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		432839401C7E722300BB6006 /* CoreProduct+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreProduct+CoreDataProperties.h"; sourceTree = "<group>"; };
+		432839411C7E722300BB6006 /* CoreProduct+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreProduct+CoreDataProperties.m"; sourceTree = "<group>"; };
+		432839421C7E722300BB6006 /* CoreProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreProduct.h; sourceTree = "<group>"; };
+		432839431C7E722300BB6006 /* CoreProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreProduct.m; sourceTree = "<group>"; };
+		432839441C7E722300BB6006 /* CoreCompany+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreCompany+CoreDataProperties.h"; sourceTree = "<group>"; };
+		432839451C7E722300BB6006 /* CoreCompany+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CoreCompany+CoreDataProperties.m"; sourceTree = "<group>"; };
+		432839461C7E722300BB6006 /* CoreCompany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreCompany.h; sourceTree = "<group>"; };
+		432839471C7E722300BB6006 /* CoreCompany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreCompany.m; sourceTree = "<group>"; };
 		432BDC3D1C764D3900248B55 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		4342291D1C40B14C00569807 /* AddCompanyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCompanyViewController.h; sourceTree = "<group>"; };
 		4342291E1C40B14C00569807 /* AddCompanyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCompanyViewController.m; sourceTree = "<group>"; };
 		434229201C40B2B400569807 /* AddProductsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductsViewController.h; sourceTree = "<group>"; };
 		434229211C40B2B400569807 /* AddProductsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductsViewController.m; sourceTree = "<group>"; };
-		435FD4201C46C40D000FDF07 /* neutron.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = neutron.jpg; sourceTree = "<group>"; };
-		435FD4221C46CCCA000FDF07 /* newNeutron.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = newNeutron.jpg; sourceTree = "<group>"; };
-		435FD4241C46CDFC000FDF07 /* lightBulb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightBulb.png; sourceTree = "<group>"; };
-		435FD4251C46CDFC000FDF07 /* newBulb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = newBulb.jpg; sourceTree = "<group>"; };
 		436C79111C4321080091F865 /* UpdateCompanyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateCompanyViewController.h; sourceTree = "<group>"; };
 		436C79121C4321080091F865 /* UpdateCompanyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateCompanyViewController.m; sourceTree = "<group>"; };
 		436C79141C4321150091F865 /* UpdateProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateProductViewController.h; sourceTree = "<group>"; };
@@ -150,28 +131,53 @@
 			name = frameworks;
 			sourceTree = "<group>";
 		};
-		431314931C40516B006B4083 /* images */ = {
+		4328393C1C7E631F00BB6006 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				435FD4241C46CDFC000FDF07 /* lightBulb.png */,
-				435FD4251C46CDFC000FDF07 /* newBulb.jpg */,
-				435FD4221C46CCCA000FDF07 /* newNeutron.jpg */,
-				435FD4201C46C40D000FDF07 /* neutron.jpg */,
-				4313149A1C4052CC006B4083 /* camera.jpg */,
-				4313149B1C4052CC006B4083 /* htcone.jpg */,
-				4313149C1C4052CC006B4083 /* nexus.jpg */,
-				431314941C405231006B4083 /* note.jpg */,
-				431314951C405231006B4083 /* s5.jpg */,
-				431314961C405231006B4083 /* tablet.jpg */,
-				4313148D1C404D77006B4083 /* ipad.jpg */,
-				4313148E1C404D77006B4083 /* iphone.jpg */,
-				4313148F1C404D77006B4083 /* ipod.jpg */,
-				431314841C402A39006B4083 /* apple.jpg */,
-				431314861C402AD6006B4083 /* samsung.jpg */,
-				431314881C402B17006B4083 /* htc.png */,
+				4328394D1C7E723200BB6006 /* ManagedCompany */,
+				4328394C1C7E722F00BB6006 /* ManagedProduct */,
+				4328394E1C7E733700BB6006 /* DataModel */,
 			);
-			name = images;
-			path = ..;
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		4328394C1C7E722F00BB6006 /* ManagedProduct */ = {
+			isa = PBXGroup;
+			children = (
+				432839421C7E722300BB6006 /* CoreProduct.h */,
+				432839431C7E722300BB6006 /* CoreProduct.m */,
+				432839401C7E722300BB6006 /* CoreProduct+CoreDataProperties.h */,
+				432839411C7E722300BB6006 /* CoreProduct+CoreDataProperties.m */,
+			);
+			name = ManagedProduct;
+			sourceTree = "<group>";
+		};
+		4328394D1C7E723200BB6006 /* ManagedCompany */ = {
+			isa = PBXGroup;
+			children = (
+				432839461C7E722300BB6006 /* CoreCompany.h */,
+				432839471C7E722300BB6006 /* CoreCompany.m */,
+				432839441C7E722300BB6006 /* CoreCompany+CoreDataProperties.h */,
+				432839451C7E722300BB6006 /* CoreCompany+CoreDataProperties.m */,
+			);
+			name = ManagedCompany;
+			sourceTree = "<group>";
+		};
+		4328394E1C7E733700BB6006 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				4328393D1C7E633D00BB6006 /* DataModel.xcdatamodeld */,
+			);
+			name = DataModel;
+			sourceTree = "<group>";
+		};
+		4328394F1C7E73A900BB6006 /* DAO */ = {
+			isa = PBXGroup;
+			children = (
+				437561BE1C4013F800351D86 /* DataAccessObject.h */,
+				437561BF1C4013F800351D86 /* DataAccessObject.m */,
+			);
+			name = DAO;
 			sourceTree = "<group>";
 		};
 		437561731C40089200351D86 = {
@@ -205,7 +211,6 @@
 				437561831C40089200351D86 /* AppDelegate.m */,
 				43AF8D1D1C767F5200620E29 /* NavControllerDataBase.db */,
 				4375618B1C40089200351D86 /* Assets.xcassets */,
-				431314931C40516B006B4083 /* images */,
 				437561901C40089200351D86 /* Info.plist */,
 				4375617F1C40089200351D86 /* Supporting Files */,
 			);
@@ -264,8 +269,8 @@
 				437561B91C4013D700351D86 /* Company.m */,
 				437561BB1C4013E200351D86 /* Product.h */,
 				437561BC1C4013E200351D86 /* Product.m */,
-				437561BE1C4013F800351D86 /* DataAccessObject.h */,
-				437561BF1C4013F800351D86 /* DataAccessObject.m */,
+				4328394F1C7E73A900BB6006 /* DAO */,
+				4328393C1C7E631F00BB6006 /* CoreData */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -411,26 +416,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4313149F1C4052CC006B4083 /* nexus.jpg in Resources */,
-				431314911C404D77006B4083 /* iphone.jpg in Resources */,
-				431314971C405231006B4083 /* note.jpg in Resources */,
 				4375618F1C40089200351D86 /* LaunchScreen.storyboard in Resources */,
-				431314921C404D77006B4083 /* ipod.jpg in Resources */,
-				435FD4261C46CDFC000FDF07 /* lightBulb.png in Resources */,
-				435FD4211C46C40D000FDF07 /* neutron.jpg in Resources */,
-				431314901C404D77006B4083 /* ipad.jpg in Resources */,
-				431314991C405231006B4083 /* tablet.jpg in Resources */,
-				4313149E1C4052CC006B4083 /* htcone.jpg in Resources */,
-				435FD4231C46CCCA000FDF07 /* newNeutron.jpg in Resources */,
 				4375618C1C40089200351D86 /* Assets.xcassets in Resources */,
-				435FD4271C46CDFC000FDF07 /* newBulb.jpg in Resources */,
-				431314851C402A39006B4083 /* apple.jpg in Resources */,
-				43AF8D1E1C767F5200620E29 /* NavControllerDataBase.db in Resources */,
-				431314891C402B17006B4083 /* htc.png in Resources */,
-				4313149D1C4052CC006B4083 /* camera.jpg in Resources */,
 				4375618A1C40089200351D86 /* Main.storyboard in Resources */,
-				431314871C402AD6006B4083 /* samsung.jpg in Resources */,
-				431314981C405231006B4083 /* s5.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,12 +447,17 @@
 				431314A21C40552B006B4083 /* UrlViewController.m in Sources */,
 				437561B41C400DF700351D86 /* CompanyTableViewController.m in Sources */,
 				437561BD1C4013E200351D86 /* Product.m in Sources */,
+				4328394B1C7E722300BB6006 /* CoreCompany.m in Sources */,
+				432839481C7E722300BB6006 /* CoreProduct+CoreDataProperties.m in Sources */,
 				436C79131C4321080091F865 /* UpdateCompanyViewController.m in Sources */,
 				4313148C1C403C33006B4083 /* ProductTableViewController.m in Sources */,
+				432839491C7E722300BB6006 /* CoreProduct.m in Sources */,
 				437561841C40089200351D86 /* AppDelegate.m in Sources */,
 				436C79161C4321150091F865 /* UpdateProductViewController.m in Sources */,
 				434229221C40B2B400569807 /* AddProductsViewController.m in Sources */,
 				437561811C40089200351D86 /* main.m in Sources */,
+				4328394A1C7E722300BB6006 /* CoreCompany+CoreDataProperties.m in Sources */,
+				4328393F1C7E633D00BB6006 /* DataModel.xcdatamodeld in Sources */,
 				437561C01C4013F800351D86 /* DataAccessObject.m in Sources */,
 				437561BA1C4013D700351D86 /* Company.m in Sources */,
 			);
@@ -715,6 +708,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4328393D1C7E633D00BB6006 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4328393E1C7E633D00BB6006 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 4328393E1C7E633D00BB6006 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 437561741C40089200351D86 /* Project object */;
 }

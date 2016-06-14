@@ -81,7 +81,6 @@
         UITableView *tableView = (UITableView*)self.view;
         CGPoint touchPoint = [sender locationInView:self.view];
         self.indexPath = [tableView indexPathForRowAtPoint:touchPoint];
-        NSLog(@"Cell Index = %ld",(long)self.indexPath.row);
         [self performSegueWithIdentifier:@"updateProduct" sender:self.companyProducts];
     }
 }
@@ -118,8 +117,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Product *product = [self.companyProducts objectAtIndex:indexPath.row];
-        [self.dao deleteProductWithQuery:product];
+        [self.dao deleteProductFromContext:indexPath.row fromCompanyIndex:self.companyIndex.row];
         [self.companyProducts removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -129,7 +127,7 @@
     Product *product = [self.companyProducts objectAtIndex:fromIndexPath.row];
     [self.companyProducts removeObjectAtIndex:fromIndexPath.row];
     [self.companyProducts insertObject:product atIndex:toIndexPath.row];
-    [self.dao moveProductWithQuery:product usingArray:self.companyProducts];
+    [self.dao moveProductfromIndex:fromIndexPath.row toIndex:toIndexPath.row forCompanyIndex:self.companyIndex.row];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -150,12 +148,12 @@
         AddProductsViewController *addProduct = (AddProductsViewController*)segue.destinationViewController;
         addProduct.addedProductArray          = sender;
         addProduct.company                    = self.company;
+        addProduct.companyIndex               = self.companyIndex;
     } else if ( [segue.identifier isEqualToString:@"updateProduct"] ) {
         UpdateProductViewController *updateProduct = (UpdateProductViewController*)segue.destinationViewController;
         updateProduct.updateProductArray           = sender;
-        if ( self.indexPath != nil ) {
-            updateProduct.indexPath = self.indexPath;
-        }
+        updateProduct.indexPath = self.indexPath;
+        updateProduct.companyIndexPath = self.companyIndex;
     }
 }
 

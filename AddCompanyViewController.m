@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *companyNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *companyStockCodeTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *addedCompanyLogo;
-@property (nonatomic, strong) DataAccessObject *dao;
+@property (nonatomic, strong) DataAccessObject   *dao;
 
 @end
 
@@ -38,15 +38,14 @@
     company.companyLogo     = @"neutron.jpg";
     company.stockCode       = self.companyStockCodeTextField.text;
     
-    if(self.companyStockCodeTextField.text == nil){
+    if(self.companyStockCodeTextField.text == nil)
         company.stockCode = @"N/A";
-    }else{
+    else
         company.stockCode = self.companyStockCodeTextField.text;
-    }
     
     company.companyProducts = [[NSMutableArray alloc] init];
-    [self.addedCompanyArray addObject:company];
-    [self.dao addCompanyWithQuery:company];
+    [self.dao.companyList addObject:company];
+    [self.dao addCompanyToContext:company withNewPosition:@(self.dao.companyList.count - 1)];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

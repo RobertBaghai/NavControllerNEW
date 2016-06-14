@@ -10,6 +10,4 @@
 
 @interface AddCompanyViewController : UIViewController 
 
-@property (nonatomic, weak) NSMutableArray *addedCompanyArray;
-
 @end
